@@ -16,7 +16,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Dejavue Parfume - Люксовые ароматы в Грозном",
+  title: "Dejavue Parfume - Оригинальные ароматы в Грозном",
   description:
     "Откройте для себя изысканные духи от всемирно известных брендов. Бесплатная доставка при заказе от 5000₽. Быстрая доставка по Грозному.",
   generator: "v0.app",

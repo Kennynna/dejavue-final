@@ -80,7 +80,7 @@ export default function CategoriesPage() {
             Все <span className="font-semibold text-primary">ароматы</span>
           </h1>
           <p className="mx-auto mt-3 max-w-xl px-4 text-sm text-muted-foreground sm:mt-4 sm:px-0 sm:text-base">
-            Исследуйте полную коллекцию люксовых духов от лучших парфюмерных домов мира
+            Исследуйте полную коллекцию оригинальных духов от лучших парфюмерных домов мира
           </p>
         </div>
       </motion.div>

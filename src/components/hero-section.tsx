@@ -43,7 +43,7 @@ export function HeroSection() {
           className="mb-4 sm:mb-6"
         >
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground sm:text-sm sm:tracking-[0.3em]">
-            Люксовые ароматы
+            Оригинальные ароматы
           </span>
         </motion.div>
 

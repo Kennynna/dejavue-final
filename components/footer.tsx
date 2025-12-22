@@ -16,7 +16,7 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-2">
             <h3 className="text-xl font-semibold text-primary sm:text-2xl">Dejavue Parfume</h3>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground sm:mt-4">
-              Откройте для себя искусство парфюмерии в Dejavue Parfume. Мы предлагаем лучшую коллекцию люксовых ароматов
+              Откройте для себя искусство парфюмерии в Dejavue Parfume. Мы предлагаем лучшую коллекцию оригинальных ароматов
               от всемирно известных брендов с доставкой по Грозному и всей России.
             </p>
           </div>

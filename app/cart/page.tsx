@@ -35,7 +35,7 @@ export default function CartPage() {
               Ваша корзина <span className="font-semibold text-primary">пуста</span>
             </h1>
             <p className="mt-3 text-sm text-muted-foreground sm:mt-4 sm:text-base">
-              Откройте для себя нашу изысканную коллекцию люксовых ароматов
+              Откройте для себя нашу изысканную коллекцию оригинальных ароматов
             </p>
             <Button asChild className="mt-6 h-12 w-full sm:mt-8 sm:h-auto sm:w-auto" size="lg">
               <Link href="/categories">
