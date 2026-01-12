@@ -7,6 +7,7 @@ import CategoriesPage from './pages/CategoriesPage'
 import CartPage from './pages/CartPage'
 
 function App() {
+
   return (
     <CartProvider>
       <ScrollToTop />
