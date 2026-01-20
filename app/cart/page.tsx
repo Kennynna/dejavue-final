@@ -39,7 +39,7 @@ export default function CartPage() {
             </p>
             <Button asChild className="mt-6 h-12 w-full sm:mt-8 sm:h-auto sm:w-auto" size="lg">
               <Link href="/categories">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft className="mr-2 h-4 w-4 p-4" />
                 Продолжить покупки
               </Link>
             </Button>
@@ -221,6 +221,8 @@ export default function CartPage() {
                       </div>
                     </div>
                   </div>
+
+
 
                   <Button className="mt-4 h-12 w-full text-base sm:mt-6 sm:h-auto sm:text-sm" size="lg">
                     Оформить заказ

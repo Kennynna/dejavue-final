@@ -6,7 +6,8 @@ import { Button } from "../components/ui/button"
 import { Card, CardContent } from "../components/ui/card"
 import { Switch } from "../components/ui/switch"
 import { Label } from "../components/ui/label"
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react"
+import {Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Send, Instagram} from "lucide-react"
+import CreateOrderForm from "@/components/create-order-form.tsx";
 
 const DELIVERY_FEE = 300
 
@@ -36,7 +37,7 @@ export default function CartPage() {
             </p>
             <Button asChild className="mt-6 h-12 w-full sm:mt-8 sm:h-auto sm:w-auto" size="lg">
               <Link to="/categories">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft className="mr-2 h-4 w-4 m-2" />
                 Продолжить покупки
               </Link>
             </Button>
@@ -149,7 +150,7 @@ export default function CartPage() {
                           {(item.perfume.price * item.quantity).toLocaleString("ru-RU")} ₽
                         </span>
                       </div>
-                    </CardContent>
+                    </CardContent >
                   </Card>
                 </motion.div>
               ))}
@@ -218,13 +219,29 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <Button className="mt-4 h-12 w-full text-base sm:mt-6 sm:h-auto sm:text-sm" size="lg">
-                    Оформить заказ
-                  </Button>
+
+                  <CreateOrderForm deliveryEnabled={deliveryEnabled} items={items} clearCart={clearCart}/>
 
                   <p className="mt-3 text-center text-[10px] text-muted-foreground sm:mt-4 sm:text-xs">
-                    Бесплатная доставка при заказе от 5000₽
+                    Бесплатная доставка при заказе от 3 позиций
                   </p>
+                  <p className="mt-3 text-center text-[14px] text-muted-foreground sm:mt-4">
+                    Хотите уточнить или спросить по поводу товара ? Ответим на любы вопросы
+                  </p>
+
+                  <div className='flex items-center justify-center mt-3 gap-4'>
+                    <a href='http://yandex.ru' target={'_blank'} className='flex items-center justify-center gap-2'>
+                      <Send  size={20} color='var(--primary)'/>
+                      <p>Telegram</p>
+                    </a>
+                    <a href='http://yandex.ru' target={'_blank'} className='flex items-center justify-center gap-2'>
+                      <Instagram   size={20} color='var(--primary)'/>
+                      <p>Instagram</p>
+                    </a>
+
+                  </div>
+
+
                 </CardContent>
               </Card>
             </motion.div>

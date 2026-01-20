@@ -1,10 +1,25 @@
 import { motion } from "framer-motion"
-import { perfumes } from "../lib/data"
 import { ProductCard } from "./product-card"
+import {useProducts} from "@/hooks/useProducts.tsx";
+import {useEffect, useMemo, useState} from "react";
+import {IProduct} from "@/types";
 
-const featured = perfumes.filter((p) => p.featured).slice(0, 6)
+// const featured = perfumes.filter((p) => p.featured).slice(0, 6)
 
 export function FeaturedProducts() {
+  const [feature, setFeatured] = useState([])
+  const {data , isLoading} = useProducts()
+
+  useEffect(() => {
+    setFeatured(data)
+  }, [isLoading]);
+
+ const featured:IProduct[] = useMemo(() => {
+    return feature?.filter((p:IProduct) => p.featured).slice(0, 6)
+  },[feature])
+
+
+
   return (
     <section className="bg-background py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -27,7 +42,7 @@ export function FeaturedProducts() {
         </motion.div>
 
         <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 md:gap-6 lg:mt-16 lg:grid-cols-3">
-          {featured.map((perfume, index) => (
+          {featured && featured.length > 0 && featured.map((perfume, index) => (
             <motion.div
               key={perfume.id}
               initial={{ opacity: 0, y: 30 }}

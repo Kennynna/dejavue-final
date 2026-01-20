@@ -72,7 +72,7 @@ export function HeroSection() {
         </motion.h1>
 
         <motion.p
-          className="mt-6 max-w-xl px-2 text-pretty text-base leading-relaxed text-muted-foreground sm:mt-8 sm:max-w-2xl sm:px-0 sm:text-lg md:text-xl"
+          className="mt-6 max-w-xl px-2 text-pretty text-base leading-relaxed text-muted-foreground sm:mt-8 sm:max-w-2xl sm:px-0 sm:text-lg md:text-xl font-bold"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
@@ -87,7 +87,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
-          <Button asChild size="lg" className="group h-14 w-full px-8 text-base sm:h-auto sm:w-auto sm:py-6">
+          <Button asChild size="lg" className="group  w-full p-4 text-base ">
             <Link to="/categories">
               Смотреть коллекцию
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -97,7 +97,7 @@ export function HeroSection() {
 
         {/* Decorative line - hidden on mobile */}
         <motion.div
-          className="absolute bottom-16 left-1/2 hidden h-20 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-border to-transparent sm:bottom-20 sm:block"
+          className="absolute bottom-16 left-1/2 hidden h-20 w-px -translate-x-1/2 bg-linear-to-b from-transparent via-border to-transparent sm:bottom-20 sm:block"
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}

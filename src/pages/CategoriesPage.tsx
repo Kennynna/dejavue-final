@@ -1,12 +1,11 @@
-import { useState, useMemo } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { perfumes } from "../lib/data"
-import { ProductCard } from "../components/product-card"
+import { useState } from "react"
+import { motion } from "framer-motion"
 import { FiltersSidebar } from "../components/filters-sidebar"
 import { Button } from "../components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
 import { SlidersHorizontal, Grid3X3, LayoutGrid } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet"
+import { VirtualProductGrid } from "@/components/virtual-product-grid"
 
 type SortOption = "default" | "price-asc" | "price-desc" | "rating" | "name"
 
@@ -14,56 +13,18 @@ export default function CategoriesPage() {
   const [selectedGenders, setSelectedGenders] = useState<string[]>([])
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedVolumes, setSelectedVolumes] = useState<string[]>([])
-  const [minRating, setMinRating] = useState(0)
   const [sortBy, setSortBy] = useState<SortOption>("default")
-  const [gridCols, setGridCols] = useState<2 | 3>(3)
+  const [gridCols, setGridCols] = useState<2 | 3>(2)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
-  const filteredAndSorted = useMemo(() => {
-    let result = [...perfumes]
-
-    if (selectedGenders.length > 0) {
-      result = result.filter((p) => selectedGenders.includes(p.gender))
-    }
-
-    if (selectedBrands.length > 0) {
-      result = result.filter((p) => selectedBrands.includes(p.brand))
-    }
-
-    if (selectedVolumes.length > 0) {
-      result = result.filter((p) => {
-        const vol = Number.parseInt(p.volume)
-        return selectedVolumes.some((v) => {
-          if (v === "100мл+") return vol >= 100
-          return p.volume === v
-        })
-      })
-    }
-
-    if (minRating > 0) {
-      result = result.filter((p) => p.rating >= minRating)
-    }
-
-    switch (sortBy) {
-      case "price-asc":
-        result.sort((a, b) => a.price - b.price)
-        break
-      case "price-desc":
-        result.sort((a, b) => b.price - a.price)
-        break
-      case "rating":
-        result.sort((a, b) => b.rating - a.rating)
-        break
-      case "name":
-        result.sort((a, b) => a.name.localeCompare(b.name))
-        break
-    }
-
-    return result
-  }, [selectedGenders, selectedBrands, selectedVolumes, minRating, sortBy])
-
   const activeFiltersCount =
-    selectedGenders.length + selectedBrands.length + selectedVolumes.length + (minRating > 0 ? 1 : 0)
+    selectedGenders.length + selectedBrands.length + selectedVolumes.length
+
+  const clearFilters = () => {
+    setSelectedGenders([])
+    setSelectedBrands([])
+    setSelectedVolumes([])
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -102,9 +63,17 @@ export default function CategoriesPage() {
                 setSelectedBrands={setSelectedBrands}
                 selectedVolumes={selectedVolumes}
                 setSelectedVolumes={setSelectedVolumes}
-                minRating={minRating}
-                setMinRating={setMinRating}
               />
+              {activeFiltersCount > 0 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-4 w-full"
+                  onClick={clearFilters}
+                >
+                  Сбросить фильтры ({activeFiltersCount})
+                </Button>
+              )}
             </div>
           </motion.aside>
 
@@ -133,15 +102,24 @@ export default function CategoriesPage() {
                       setSelectedBrands={setSelectedBrands}
                       selectedVolumes={selectedVolumes}
                       setSelectedVolumes={setSelectedVolumes}
-                      minRating={minRating}
-                      setMinRating={setMinRating}
                       onClose={() => setMobileFiltersOpen(false)}
                       isMobile
                     />
+                    {activeFiltersCount > 0 && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-4 w-full"
+                        onClick={() => {
+                          clearFilters()
+                          setMobileFiltersOpen(false)
+                        }}
+                      >
+                        Сбросить фильтры ({activeFiltersCount})
+                      </Button>
+                    )}
                   </SheetContent>
                 </Sheet>
-
-                <span className="text-xs text-muted-foreground sm:text-sm">{filteredAndSorted.length} товаров</span>
               </div>
 
               <div className="flex items-center gap-2 sm:gap-4">
@@ -179,58 +157,19 @@ export default function CategoriesPage() {
               </div>
             </div>
 
-            <AnimatePresence mode="wait">
-              {filteredAndSorted.length > 0 ? (
-                <motion.div
-                  key="grid"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className={`grid gap-3 sm:gap-4 md:gap-6 ${
-                    gridCols === 2 ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-3"
-                  }`}
-                >
-                  {filteredAndSorted.map((perfume, index) => (
-                    <motion.div
-                      key={perfume.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.03 }}
-                    >
-                      <ProductCard perfume={perfume} />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="empty"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="py-16 text-center sm:py-20"
-                >
-                  <p className="text-base text-muted-foreground sm:text-lg">
-                    Нет товаров, соответствующих вашим фильтрам
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="mt-4 bg-transparent"
-                    onClick={() => {
-                      setSelectedGenders([])
-                      setSelectedBrands([])
-                      setSelectedVolumes([])
-                      setMinRating(0)
-                    }}
-                  >
-                    Сбросить все фильтры
-                  </Button>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Виртуализированная сетка с infinite scroll */}
+            <VirtualProductGrid
+              gridCols={gridCols}
+              filters={{
+                genders: selectedGenders,
+                brands: selectedBrands,
+                volumes: selectedVolumes,
+              }}
+              sortBy={sortBy}
+            />
           </div>
         </div>
       </div>
     </div>
   )
 }
-

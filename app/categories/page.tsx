@@ -104,7 +104,6 @@ export default function CategoriesPage() {
                 setSelectedBrands={setSelectedBrands}
                 selectedVolumes={selectedVolumes}
                 setSelectedVolumes={setSelectedVolumes}
-                minRating={minRating}
                 setMinRating={setMinRating}
               />
             </div>
@@ -135,7 +134,6 @@ export default function CategoriesPage() {
                       setSelectedBrands={setSelectedBrands}
                       selectedVolumes={selectedVolumes}
                       setSelectedVolumes={setSelectedVolumes}
-                      minRating={minRating}
                       setMinRating={setMinRating}
                       onClose={() => setMobileFiltersOpen(false)}
                       isMobile

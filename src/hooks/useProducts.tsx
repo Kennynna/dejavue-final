@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { getProducts } from '../api';
-import {IProduct} from "../src/types";
+import { getProducts } from '../../api';
+import {IProduct} from "@/types";
 
 export const productsKeys = {
     all: ['products'] as const,
@@ -14,7 +14,8 @@ export const useProducts = () => {
         queryFn: getProducts,
         staleTime: 1000 * 60 * 4,      // 4 минуты — хороший компромисс
         gcTime: 1000 * 60 * 15,        // 15 минут
-        retry: 2,                      // количество повторных попыток
+        retry: 2,
+        // количество повторных попыток
         // refetchOnWindowFocus: false, // если не хочешь перезагружать при возврате на вкладку
     });
 };
