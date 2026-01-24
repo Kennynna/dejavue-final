@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {useCreateOrder} from "@/hooks/useCreateOrder.tsx";
 import {IOrder, IProduct} from "@/types";
 import {useForm, SubmitHandler } from "react-hook-form";
-import Loader from "../../components/ui/Loader.tsx";
+import Loader from "@/components/ui/Loader";
 import {useNotification} from "@/components/ui/notification-modal.tsx";
 
 interface IFormInput {
@@ -54,7 +54,7 @@ const CreateOrderForm = ({deliveryEnabled, items, clearCart}: ICreateOrderForm) 
 
 
     return (
-        <div className='mt-2 min-h-[200px] relative'>
+        <div className='mt-2 min-h-[200px] relative overflow-hidden'>
             {isPending ? <Loader/> :
                 <form className='flex flex-col gap-2' onSubmit={handleSubmit(onSubmit) }>
                     <Input type='text' placeholder='ФИО'  {...register("name", {required: true})} maxLength={40} />

@@ -1,6 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { getProducts } from '../../api';
+import { getProducts } from '@/api';
 import {IProduct} from "@/types";
 
 export const productsKeys = {

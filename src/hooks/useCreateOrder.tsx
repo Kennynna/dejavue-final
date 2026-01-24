@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {createOrder} from "../../api";
+import {createOrder} from "@/api";
 import {IOrder} from "@/types";
 
 

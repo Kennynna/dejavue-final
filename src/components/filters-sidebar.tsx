@@ -1,6 +1,7 @@
 import { Checkbox } from "./ui/checkbox"
 import { Label } from "./ui/label"
-import { brands, volumes } from "../lib/data"
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
+import { brands, volumeFilters } from "../lib/data"
 import { Button } from "./ui/button"
 
 interface FiltersSidebarProps {
@@ -8,8 +9,8 @@ interface FiltersSidebarProps {
   setSelectedGenders: (genders: string[]) => void
   selectedBrands: string[]
   setSelectedBrands: (brands: string[]) => void
-  selectedVolumes: string[]
-  setSelectedVolumes: (volumes: string[]) => void
+  selectedVolume: string
+  setSelectedVolume: (volume: string) => void
   onClose?: () => void
   isMobile?: boolean
 }
@@ -25,8 +26,8 @@ export function FiltersSidebar({
   setSelectedGenders,
   selectedBrands,
   setSelectedBrands,
-  selectedVolumes,
-  setSelectedVolumes,
+  selectedVolume,
+  setSelectedVolume,
   onClose,
   isMobile,
 }: FiltersSidebarProps) {
@@ -44,20 +45,14 @@ export function FiltersSidebar({
     )
   }
 
-  const toggleVolume = (volume: string) => {
-    setSelectedVolumes(
-      selectedVolumes.includes(volume) ? selectedVolumes.filter((v) => v !== volume) : [...selectedVolumes, volume],
-    )
-  }
-
   const clearAll = () => {
     setSelectedGenders([])
     setSelectedBrands([])
-    setSelectedVolumes([])
+    setSelectedVolume("all")
   }
 
   const hasFilters =
-    selectedGenders.length > 0 || selectedBrands.length > 0 || selectedVolumes.length > 0
+    selectedGenders.length > 0 || selectedBrands.length > 0 || selectedVolume !== "all"
 
   return (
     <div className="flex h-full flex-col space-y-5 sm:space-y-6">
@@ -67,10 +62,6 @@ export function FiltersSidebar({
         </div>
       )}
 
-
-        <Button variant="secondary" size="sm" onClick={clearAll} className={`h-10 text-muted-foreground `} disabled={!hasFilters}>
-          Сбросить все фильтры
-        </Button>
 
       <div className="flex-1 space-y-5 overflow-y-auto scroll-smooth-touch sm:space-y-6">
         {/* Gender */}
@@ -122,35 +113,31 @@ export function FiltersSidebar({
         {/* Volume */}
         <div>
           <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-foreground sm:mb-4">Объём</h3>
-          <div className="space-y-2 sm:space-y-3">
-            {volumes.map((volume) => (
-              <div key={volume} className="flex items-center gap-3">
-                <Checkbox
-                  id={`volume-${volume}`}
-                  checked={selectedVolumes.includes(volume)}
-                  onCheckedChange={() => toggleVolume(volume)}
+          <RadioGroup
+            value={selectedVolume}
+            onValueChange={setSelectedVolume}
+            className="space-y-2 sm:space-y-3"
+          >
+            {volumeFilters.map((volume) => (
+              <div key={volume.value} className="flex items-center gap-3">
+                <RadioGroupItem
+                  id={`volume-${volume.value}`}
+                  value={volume.value}
                   className="h-5 w-5"
                 />
                 <Label
-                  htmlFor={`volume-${volume}`}
+                  htmlFor={`volume-${volume.value}`}
                   className="cursor-pointer py-1 text-sm text-foreground/80 sm:text-base"
                 >
-                  {volume}
+                  {volume.label}
                 </Label>
               </div>
             ))}
-          </div>
+          </RadioGroup>
         </div>
 
       </div>
 
-      {isMobile && (
-        <div className="border-t border-border pt-4 safe-bottom">
-          <Button onClick={onClose} className="h-12 w-full text-base">
-            Применить фильтры
-          </Button>
-        </div>
-      )}
     </div>
   )
 }

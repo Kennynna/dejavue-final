@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { motion } from "framer-motion"
 import { FiltersSidebar } from "../components/filters-sidebar"
 import { Button } from "../components/ui/button"
@@ -12,18 +12,40 @@ type SortOption = "default" | "price-asc" | "price-desc" | "rating" | "name"
 export default function CategoriesPage() {
   const [selectedGenders, setSelectedGenders] = useState<string[]>([])
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
-  const [selectedVolumes, setSelectedVolumes] = useState<string[]>([])
+  const [selectedVolume, setSelectedVolume] = useState<string>("all")
   const [sortBy, setSortBy] = useState<SortOption>("default")
   const [gridCols, setGridCols] = useState<2 | 3>(2)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const isFirstRender = useRef(true)
+
+  // Плавный скролл к сетке товаров при изменении фильтров
+  const scrollToGrid = useCallback(() => {
+    if (gridRef.current) {
+      const offset = gridRef.current.offsetTop - 100
+      window.scrollTo({
+        top: offset,
+        behavior: 'smooth'
+      })
+    }
+  }, [])
+
+  // Следим за изменениями фильтров (кроме первого рендера)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    scrollToGrid()
+  }, [selectedGenders, selectedBrands, selectedVolume, sortBy, scrollToGrid])
 
   const activeFiltersCount =
-    selectedGenders.length + selectedBrands.length + selectedVolumes.length
+    selectedGenders.length + selectedBrands.length + (selectedVolume !== "all" ? 1 : 0)
 
   const clearFilters = () => {
     setSelectedGenders([])
     setSelectedBrands([])
-    setSelectedVolumes([])
+    setSelectedVolume("all")
   }
 
   return (
@@ -61,8 +83,8 @@ export default function CategoriesPage() {
                 setSelectedGenders={setSelectedGenders}
                 selectedBrands={selectedBrands}
                 setSelectedBrands={setSelectedBrands}
-                selectedVolumes={selectedVolumes}
-                setSelectedVolumes={setSelectedVolumes}
+                selectedVolume={selectedVolume}
+                setSelectedVolume={setSelectedVolume}
               />
               {activeFiltersCount > 0 && (
                 <Button
@@ -100,8 +122,8 @@ export default function CategoriesPage() {
                       setSelectedGenders={setSelectedGenders}
                       selectedBrands={selectedBrands}
                       setSelectedBrands={setSelectedBrands}
-                      selectedVolumes={selectedVolumes}
-                      setSelectedVolumes={setSelectedVolumes}
+                      selectedVolume={selectedVolume}
+                      setSelectedVolume={setSelectedVolume}
                       onClose={() => setMobileFiltersOpen(false)}
                       isMobile
                     />
@@ -158,15 +180,17 @@ export default function CategoriesPage() {
             </div>
 
             {/* Виртуализированная сетка с infinite scroll */}
-            <VirtualProductGrid
-              gridCols={gridCols}
-              filters={{
-                genders: selectedGenders,
-                brands: selectedBrands,
-                volumes: selectedVolumes,
-              }}
-              sortBy={sortBy}
-            />
+            <div ref={gridRef}>
+              <VirtualProductGrid
+                gridCols={gridCols}
+                filters={{
+                  genders: selectedGenders,
+                  brands: selectedBrands,
+                  volume: selectedVolume,
+                }}
+                sortBy={sortBy}
+              />
+            </div>
           </div>
         </div>
       </div>

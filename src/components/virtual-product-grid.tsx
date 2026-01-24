@@ -4,14 +4,14 @@ import { Loader2 } from 'lucide-react'
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
 import { ProductCard } from './product-card'
 import { IProduct } from '@/types'
-import Loader from '../../components/ui/Loader'
+import Loader from '@/components/ui/Loader'
 
 interface VirtualProductGridProps {
   gridCols: 2 | 3
   filters?: {
     genders: string[]
     brands: string[]
-    volumes: string[]
+    volume: string
   }
   sortBy?: string
 }
@@ -47,13 +47,22 @@ export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProduct
       result = result.filter((p) => filters.brands.includes(p.brand))
     }
 
-    if (filters?.volumes && filters.volumes.length > 0) {
+    // Фильтрация по объему (одиночный выбор)
+    if (filters?.volume && filters.volume !== 'all') {
       result = result.filter((p) => {
-        const vol = parseInt(p.volume)
-        return filters.volumes.some((v) => {
-          if (v === '100мл+') return vol >= 100
-          return p.volume === v
-        })
+        const vol = parseInt(p.volume) || 0
+        switch (filters.volume) {
+          case '30':
+            return vol <= 30
+          case '50':
+            return vol <= 50
+          case '75':
+            return vol <= 75
+          case '100+':
+            return vol >= 100
+          default:
+            return true
+        }
       })
     }
 
@@ -121,7 +130,7 @@ export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProduct
 
   if (isLoading) {
     return (
-      <div className="relative min-h-[500px]">
+      <div className="relative min-h-[500px] overflow-hidden">
         <Loader />
       </div>
     )
@@ -151,10 +160,7 @@ export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProduct
 
   return (
     <div>
-      {/* Счетчик */}
-      <div className="mb-4 text-xs text-muted-foreground sm:text-sm">
-        Показано {filteredProducts.length} из {totalCount} товаров
-      </div>
+
 
       {/* Контейнер для виртуализации с window scroll */}
       <div

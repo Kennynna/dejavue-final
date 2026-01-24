@@ -16,4 +16,10 @@ const brandsArr = ["Chanel", "Dior","Sauvage","Gucci","Dolce & Gabbana","Tom For
 
 
 export const brands = [...new Set(brandsArr.map((p) => p))].sort()
-export const volumes = ["30мл", "50мл", "75мл", "100мл+"]
+export const volumeFilters = [
+  { value: "all", label: "Все объемы" },
+  { value: "30", label: "до 30мл" },
+  { value: "50", label: "до 50мл" },
+  { value: "75", label: "до 75мл" },
+  { value: "100+", label: "100мл+" },
+]
