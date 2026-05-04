@@ -48,6 +48,8 @@ export function Navbar() {
             whileHover={{ scale: 1.02 }}
           >
             Déjà vu Parfume
+
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground sm:text-sm sm:tracking-[0.3em]">Теперь и в Грозном</p>
           </motion.span>
         </Link>
 

@@ -5,7 +5,7 @@ const advantages = [
   {
     icon: Truck,
     title: "Бесплатная доставка",
-    description: "При заказе от 5000₽",
+    description: "При заказе от 3 позиций",
   },
   {
     icon: Award,
@@ -15,7 +15,7 @@ const advantages = [
   {
     icon: Package,
     title: "Широкий ассортимент",
-    description: "Премиальные бренды со всего мира",
+    description: "Бренды со всего мира",
   },
   {
     icon: Clock,
