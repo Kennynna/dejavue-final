@@ -45,20 +45,16 @@ export function FiltersSidebar({
     )
   }
 
-  const clearAll = () => {
-    setSelectedGenders([])
-    setSelectedBrands([])
-    setSelectedVolume("all")
-  }
-
-  const hasFilters =
-    selectedGenders.length > 0 || selectedBrands.length > 0 || selectedVolume !== "all"
-
   return (
     <div className="flex h-full flex-col space-y-5 sm:space-y-6">
       {isMobile && (
         <div className="flex items-center justify-between border-b border-border pb-4">
           <h2 className="text-lg font-semibold">Фильтры</h2>
+          {onClose && (
+            <Button type="button" variant="secondary" size="sm" onClick={onClose}>
+              Готово
+            </Button>
+          )}
         </div>
       )}
 
@@ -89,7 +85,7 @@ export function FiltersSidebar({
 
         {/* Brands */}
         <div>
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-foreground sm:mb-4">Популярые бренды</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-foreground sm:mb-4">Популярные бренды</h3>
           <div className="max-h-40 space-y-2 overflow-y-auto pr-2 scrollbar-hide sm:max-h-48 sm:space-y-3">
             {brands.map((brand) => (
               <div key={brand} className="flex items-center gap-3">

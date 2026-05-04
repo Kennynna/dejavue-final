@@ -1,24 +1,25 @@
 import { motion } from "framer-motion"
 import { ProductCard } from "./product-card"
-import {useProducts} from "@/hooks/useProducts.tsx";
-import {useEffect, useMemo, useState} from "react";
-import {IProduct} from "@/types";
-
-// const featured = perfumes.filter((p) => p.featured).slice(0, 6)
+import { useProducts } from "@/hooks/useProducts.tsx"
+import { useMemo } from "react"
+import type { IProduct } from "@/types"
 
 export function FeaturedProducts() {
-  const [feature, setFeatured] = useState([])
-  const {data , isLoading} = useProducts()
+  const { data, isLoading } = useProducts()
 
-  useEffect(() => {
-    setFeatured(data)
-  }, [isLoading]);
+  const featured: IProduct[] = useMemo(() => {
+    return data?.filter((p) => p.featured).slice(0, 6) ?? []
+  }, [data])
 
- const featured:IProduct[] = useMemo(() => {
-    return feature?.filter((p:IProduct) => p.featured).slice(0, 6)
-  },[feature])
-
-
+  if (isLoading) {
+    return (
+      <section className="bg-background py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 text-center text-muted-foreground sm:px-6 lg:px-8">
+          Загрузка коллекции…
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="bg-background py-12 sm:py-16 lg:py-20">
@@ -42,17 +43,18 @@ export function FeaturedProducts() {
         </motion.div>
 
         <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 md:gap-6 lg:mt-16 lg:grid-cols-3">
-          {featured && featured.length > 0 && featured.map((perfume, index) => (
-            <motion.div
-              key={perfume.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <ProductCard perfume={perfume} />
-            </motion.div>
-          ))}
+          {featured.length > 0 &&
+            featured.map((perfume, index) => (
+              <motion.div
+                key={perfume.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <ProductCard perfume={perfume} />
+              </motion.div>
+            ))}
         </div>
       </div>
     </section>

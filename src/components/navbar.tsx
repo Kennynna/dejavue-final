@@ -1,27 +1,18 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useCart } from "./cart-context"
-import { useAuthStore } from "@/store/useAuthStore"
-import { ShoppingBag, Menu, X, Settings, LogIn, LogOut } from "lucide-react"
+import { ShoppingBag, Menu, X } from "lucide-react"
 import { Button } from "./ui/button"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export function Navbar() {
-  const navigate = useNavigate()
   const { totalItems } = useCart()
-  const { isAuthenticated, user, logout } = useAuthStore()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  const handleLogout = () => {
-    logout()
-    setMobileMenuOpen(false)
-    navigate("/")
-  }
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -49,11 +40,12 @@ export function Navbar() {
           >
             Déjà vu Parfume
 
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground sm:text-sm sm:tracking-[0.3em]">Теперь и в Грозном</p>
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground sm:text-sm sm:tracking-[0.3em]">
+              Теперь и в Грозном
+            </p>
           </motion.span>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
           <Link
             to="/"
@@ -67,14 +59,6 @@ export function Navbar() {
           >
             Каталог
           </Link>
-          {isAuthenticated && (
-            <Link
-              to="/admin"
-              className="text-sm font-medium uppercase tracking-widest text-foreground/80 transition-colors hover:text-primary"
-            >
-              Админ
-            </Link>
-          )}
           <Link to="/cart" className="relative">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingBag className="h-5 w-5" />
@@ -89,19 +73,6 @@ export function Navbar() {
               )}
             </Button>
           </Link>
-          {isAuthenticated ? (
-            <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
-              <LogOut className="h-4 w-4" />
-              Выйти
-            </Button>
-          ) : (
-            <Link to="/login">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <LogIn className="h-4 w-4" />
-                Войти
-              </Button>
-            </Link>
-          )}
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -134,56 +105,28 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="absolute left-0 right-0 top-full border-b border-border bg-background md:hidden"
           >
-            <div className="flex flex-col items-center px-4 py-6 safe-x">
+            <div className="safe-x flex flex-col items-center px-4 py-6">
               <Link
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex h-14 items-center text-base font-medium uppercase tracking-widest text-foreground/80 active:text-primary touch-target"
+                className="flex h-14 items-center text-base font-medium uppercase tracking-widest text-foreground/80 touch-target active:text-primary"
               >
                 Главная
               </Link>
               <Link
                 to="/categories"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex h-14 items-center text-base font-medium uppercase tracking-widest text-foreground/80 active:text-primary touch-target"
+                className="flex h-14 items-center text-base font-medium uppercase tracking-widest text-foreground/80 touch-target active:text-primary"
               >
                 Каталог
               </Link>
               <Link
                 to="/cart"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex h-14 items-center text-base font-medium uppercase tracking-widest text-foreground/80 active:text-primary touch-target"
+                className="flex h-14 items-center text-base font-medium uppercase tracking-widest text-foreground/80 touch-target active:text-primary"
               >
                 Корзина {mounted && totalItems > 0 && `(${totalItems})`}
               </Link>
-              {isAuthenticated && (
-                <Link
-                  to="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex h-14 items-center gap-2 text-base font-medium uppercase tracking-widest text-foreground/80 active:text-primary touch-target"
-                >
-                  <Settings className="h-4 w-4" />
-                  Админ
-                </Link>
-              )}
-              {isAuthenticated ? (
-                <button
-                  onClick={handleLogout}
-                  className="flex h-14 items-center gap-2 text-base font-medium uppercase tracking-widest text-foreground/80 active:text-primary touch-target"
-                >
-                  <LogOut className="h-4 w-4" />
-                  Выйти ({user?.email})
-                </button>
-              ) : (
-                <Link
-                  to="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex h-14 items-center gap-2 text-base font-medium uppercase tracking-widest text-foreground/80 active:text-primary touch-target"
-                >
-                  <LogIn className="h-4 w-4" />
-                  Войти
-                </Link>
-              )}
             </div>
           </motion.div>
         )}

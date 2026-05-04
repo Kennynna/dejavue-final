@@ -39,7 +39,7 @@ export function ProductCard({ perfume }: ProductCardProps) {
 
 
             <span className="absolute right-2 top-2 rounded-full bg-background/90 px-2 py-0.5 text-[10px] font-medium text-foreground backdrop-blur-sm sm:right-3 sm:top-3 sm:px-3 sm:py-1 sm:text-xs">
-              {genderLabels[perfume.gender]}
+              {genderLabels[perfume.gender] ?? perfume.gender}
             </span>
           </div>
 

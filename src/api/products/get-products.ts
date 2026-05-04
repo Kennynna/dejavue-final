@@ -1,10 +1,6 @@
-import {API} from "../index";
+import { getAllProducts } from "@/lib/catalogRepository"
+import type { IProduct } from "@/types"
 
-
-export const getProducts = async () => {
-    const products = await fetch(`${API.BASE_URL}${API.ALL_PRODUCTS}`);
-    const response = await products.json();
-    console.log(response);
-    return response.data;
-
+export async function getProducts(): Promise<IProduct[]> {
+  return getAllProducts()
 }

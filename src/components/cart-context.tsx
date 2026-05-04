@@ -1,16 +1,18 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import type { Perfume } from "../lib/data"
+import type { IProduct } from "@/types"
+
+const STORAGE_KEY = "dejavue-cart-v2"
 
 export interface CartItem {
-  perfume: Perfume
+  perfume: IProduct
   quantity: number
 }
 
 interface CartContextType {
   items: CartItem[]
-  addToCart: (perfume: Perfume) => void
-  removeFromCart: (id: string) => void
-  updateQuantity: (id: string, quantity: number) => void
+  addToCart: (perfume: IProduct) => void
+  removeFromCart: (id: number) => void
+  updateQuantity: (id: number, quantity: number) => void
   clearCart: () => void
   totalItems: number
   subtotal: number
@@ -18,29 +20,69 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
+function normalizePerfume(raw: Record<string, unknown>): IProduct | null {
+  const id = Number(raw.id)
+  if (!Number.isFinite(id)) return null
+  const images = Array.isArray(raw.images)
+    ? (raw.images as unknown[]).filter((x): x is string => typeof x === "string")
+    : typeof raw.image === "string"
+      ? [raw.image]
+      : ["/placeholder.svg"]
+  const gender = typeof raw.gender === "string" ? raw.gender : "unisex"
+  return {
+    id,
+    name: typeof raw.name === "string" ? raw.name : "",
+    brand: typeof raw.brand === "string" ? raw.brand : "",
+    price: typeof raw.price === "number" ? raw.price : 0,
+    images: images.length ? images : ["/placeholder.svg"],
+    gender,
+    volume: typeof raw.volume === "string" ? raw.volume : "",
+    rating: typeof raw.rating === "number" ? raw.rating : 0,
+    description: typeof raw.description === "string" ? raw.description : "",
+    featured: Boolean(raw.featured),
+  }
+}
+
+function parseStoredCart(json: string): CartItem[] {
+  try {
+    const parsed = JSON.parse(json) as unknown
+    if (!Array.isArray(parsed)) return []
+    const out: CartItem[] = []
+    for (const row of parsed) {
+      if (!row || typeof row !== "object") continue
+      const o = row as Record<string, unknown>
+      const quantity = typeof o.quantity === "number" ? o.quantity : 0
+      const perfumeRaw = o.perfume
+      if (!perfumeRaw || typeof perfumeRaw !== "object") continue
+      const perfume = normalizePerfume(perfumeRaw as Record<string, unknown>)
+      if (!perfume || quantity < 1) continue
+      out.push({ perfume, quantity })
+    }
+    return out
+  } catch {
+    return []
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const saved = localStorage.getItem("dejavue-cart")
+    const saved = localStorage.getItem(STORAGE_KEY)
     if (saved) {
-      try {
-        setItems(JSON.parse(saved))
-      } catch {
-        setItems([])
-      }
+      setItems(parseStoredCart(saved))
     }
   }, [])
 
   useEffect(() => {
     if (mounted) {
-      localStorage.setItem("dejavue-cart", JSON.stringify(items))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
     }
   }, [items, mounted])
 
-  const addToCart = (perfume: Perfume) => {
+  const addToCart = (perfume: IProduct) => {
     setItems((prev) => {
       const existing = prev.find((item) => item.perfume.id === perfume.id)
       if (existing) {
@@ -50,11 +92,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     })
   }
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id: number) => {
     setItems((prev) => prev.filter((item) => item.perfume.id !== id))
   }
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (id: number, quantity: number) => {
     if (quantity < 1) {
       removeFromCart(id)
       return

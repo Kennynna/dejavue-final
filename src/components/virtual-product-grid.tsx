@@ -94,9 +94,6 @@ export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProduct
     return rowsArray
   }, [filteredProducts, gridCols])
 
-  // Общее количество с сервера
-  const totalCount = data?.pages[0]?.meta?.pagination?.total ?? 0
-
   // Window Virtualizer — скролл всей страницы
   const rowVirtualizer = useWindowVirtualizer({
     count: rows.length,

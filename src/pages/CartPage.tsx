@@ -1,21 +1,13 @@
-import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Link } from "react-router-dom"
 import { useCart } from "../components/cart-context"
 import { Button } from "../components/ui/button"
 import { Card, CardContent } from "../components/ui/card"
-import { Switch } from "../components/ui/switch"
-import { Label } from "../components/ui/label"
-import {Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Send, Instagram} from "lucide-react"
-import CreateOrderForm from "@/components/create-order-form.tsx";
-
-const DELIVERY_FEE = 300
+import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Send, Instagram } from "lucide-react"
+import { CartOrderNotice } from "@/components/cart-order-notice"
 
 export default function CartPage() {
   const { items, updateQuantity, removeFromCart, subtotal, clearCart } = useCart()
-  const [deliveryEnabled, setDeliveryEnabled] = useState(false)
-
-  const total = subtotal + (deliveryEnabled ? DELIVERY_FEE : 0)
 
   if (items.length === 0) {
     return (
@@ -37,7 +29,7 @@ export default function CartPage() {
             </p>
             <Button asChild className="mt-6 h-12 w-full sm:mt-8 sm:h-auto sm:w-auto" size="lg">
               <Link to="/categories">
-                <ArrowLeft className="mr-2 h-4 w-4 m-2" />
+                <ArrowLeft className="m-2 mr-2 h-4 w-4" />
                 Продолжить покупки
               </Link>
             </Button>
@@ -66,7 +58,6 @@ export default function CartPage() {
 
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-          {/* Cart Items */}
           <div className="flex-1">
             <AnimatePresence mode="popLayout">
               {items.map((item, index) => (
@@ -82,7 +73,7 @@ export default function CartPage() {
                       <div className="flex gap-3 p-3 sm:gap-4 sm:p-4">
                         <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md bg-secondary/30 sm:h-32 sm:w-24">
                           <img
-                            src={item.perfume.image || "/placeholder.svg"}
+                            src={item.perfume.images[0] || "/placeholder.svg"}
                             alt={item.perfume.name}
                             className="h-full w-full object-cover"
                           />
@@ -104,7 +95,7 @@ export default function CartPage() {
                               <Button
                                 variant="outline"
                                 size="icon"
-                                className="h-8 w-8 bg-transparent touch-target"
+                                className="h-8 w-8 touch-target bg-transparent"
                                 onClick={() => updateQuantity(item.perfume.id, item.quantity - 1)}
                               >
                                 <Minus className="h-3 w-3" />
@@ -113,7 +104,7 @@ export default function CartPage() {
                               <Button
                                 variant="outline"
                                 size="icon"
-                                className="h-8 w-8 bg-transparent touch-target"
+                                className="h-8 w-8 touch-target bg-transparent"
                                 onClick={() => updateQuantity(item.perfume.id, item.quantity + 1)}
                               >
                                 <Plus className="h-3 w-3" />
@@ -150,7 +141,7 @@ export default function CartPage() {
                           {(item.perfume.price * item.quantity).toLocaleString("ru-RU")} ₽
                         </span>
                       </div>
-                    </CardContent >
+                    </CardContent>
                   </Card>
                 </motion.div>
               ))}
@@ -169,79 +160,53 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Order Summary */}
           <div className="lg:w-96">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
               <Card className="border-border/50 lg:sticky lg:top-24">
                 <CardContent className="p-4 sm:p-6">
-                  <h2 className="text-lg font-semibold text-foreground sm:text-xl">Итого заказа</h2>
 
                   <div className="mt-4 space-y-3 sm:mt-6 sm:space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground sm:text-base">Подытог</span>
-                      <span className="font-medium text-foreground">{subtotal.toLocaleString("ru-RU")} ₽</span>
-                    </div>
 
-                    {/* Delivery Toggle */}
-                    <div className="rounded-lg border border-border bg-secondary/30 p-3 sm:p-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex-1">
-                          <Label htmlFor="delivery" className="text-sm font-medium text-foreground sm:text-base">
-                            Курьерская доставка
-                          </Label>
-                          <p className="mt-0.5 text-xs text-muted-foreground sm:mt-1 sm:text-sm">
-                            +{DELIVERY_FEE}₽ по Грозному
-                          </p>
-                        </div>
-                        <Switch id="delivery" checked={deliveryEnabled} onCheckedChange={setDeliveryEnabled} />
-                      </div>
-                    </div>
-
-                    {deliveryEnabled && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="flex items-center justify-between"
-                      >
-                        <span className="text-sm text-muted-foreground sm:text-base">Доставка</span>
-                        <span className="font-medium text-foreground">{DELIVERY_FEE.toLocaleString("ru-RU")} ₽</span>
-                      </motion.div>
-                    )}
 
                     <div className="border-t border-border pt-3 sm:pt-4">
                       <div className="flex items-center justify-between">
                         <span className="text-base font-semibold text-foreground sm:text-lg">Итого</span>
                         <span className="text-xl font-bold text-primary sm:text-2xl">
-                          {total.toLocaleString("ru-RU")} ₽
+                          {subtotal.toLocaleString("ru-RU")} ₽
                         </span>
                       </div>
                     </div>
                   </div>
 
-
-                  <CreateOrderForm deliveryEnabled={deliveryEnabled} items={items} clearCart={clearCart}/>
+                  <CartOrderNotice />
 
                   <p className="mt-3 text-center text-[10px] text-muted-foreground sm:mt-4 sm:text-xs">
-                    Бесплатная доставка при заказе от 3 позиций
+                    Условия доставки и оплаты уточняйте по телефону
                   </p>
                   <p className="mt-3 text-center text-[14px] text-muted-foreground sm:mt-4">
-                    Хотите уточнить или спросить по поводу товара ? Ответим на любы вопросы
+                    Хотите уточнить или спросить по поводу товара? Ответим на любые вопросы
                   </p>
 
-                  <div className='flex items-center justify-center mt-3 gap-4'>
-                    <a href='http://yandex.ru' target={'_blank'} className='flex items-center justify-center gap-2'>
-                      <Send  size={20} color='var(--primary)'/>
-                      <p>Telegram</p>
+                  <div className="mt-3 flex items-center justify-center gap-4">
+                    <a
+                      href="https://t.me/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Send size={20} color="var(--primary)" />
+                      <span>Telegram</span>
                     </a>
-                    <a href='http://yandex.ru' target={'_blank'} className='flex items-center justify-center gap-2'>
-                      <Instagram   size={20} color='var(--primary)'/>
-                      <p>Instagram</p>
+                    <a
+                      href="https://instagram.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <Instagram size={20} color="var(--primary)" />
+                      <span>Instagram</span>
                     </a>
-
                   </div>
-
-
                 </CardContent>
               </Card>
             </motion.div>
@@ -251,4 +216,3 @@ export default function CartPage() {
     </div>
   )
 }
-
