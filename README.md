@@ -16,12 +16,12 @@
 
 1. Установите зависимости:
 ```bash
-pnpm install
+npm install
 ```
 
 2. Запустите dev-сервер:
 ```bash
-pnpm dev
+npm run dev
 ```
 
 3. Откройте браузер по адресу `http://localhost:5173`
@@ -29,7 +29,7 @@ pnpm dev
 ## Сборка для продакшена
 
 ```bash
-pnpm build
+npm run build
 ```
 
 Собранные файлы будут в папке `dist/`.
@@ -50,8 +50,8 @@ src/
 
 ## Скрипты
 
-- `pnpm dev` - Запуск dev-сервера
-- `pnpm build` - Сборка для продакшена
-- `pnpm preview` - Предпросмотр собранного приложения
-- `pnpm lint` - Проверка кода линтером
+- `npm run dev` - Запуск dev-сервера
+- `npm run build` - Сборка для продакшена
+- `npm run preview` - Предпросмотр собранного приложения
+- `npm run lint` - Проверка кода линтером
 
