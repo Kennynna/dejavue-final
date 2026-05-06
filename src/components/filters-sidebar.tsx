@@ -50,11 +50,6 @@ export function FiltersSidebar({
       {isMobile && (
         <div className="flex items-center justify-between border-b border-border pb-4">
           <h2 className="text-lg font-semibold">Фильтры</h2>
-          {onClose && (
-            <Button type="button" variant="secondary" size="sm" onClick={onClose}>
-              Готово
-            </Button>
-          )}
         </div>
       )}
 

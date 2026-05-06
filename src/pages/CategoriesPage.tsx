@@ -145,24 +145,6 @@ export default function CategoriesPage() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-4">
-                <div className="hidden items-center gap-1 xs:flex sm:flex">
-                  <Button
-                    variant={gridCols === 2 ? "secondary" : "ghost"}
-                    size="icon"
-                    onClick={() => setGridCols(2)}
-                    className="h-9 w-9 sm:h-10 sm:w-10"
-                  >
-                    <LayoutGrid className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant={gridCols === 3 ? "secondary" : "ghost"}
-                    size="icon"
-                    onClick={() => setGridCols(3)}
-                    className="hidden h-9 w-9 sm:flex sm:h-10 sm:w-10"
-                  >
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                </div>
 
                 <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
                   <SelectTrigger className="h-10 w-32 text-xs sm:w-48 sm:text-sm">
