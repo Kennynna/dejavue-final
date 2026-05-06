@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Truck, Award, Package, Clock } from "lucide-react"
+import { Award, Package, Clock } from "lucide-react"
 
 const advantages = [
 

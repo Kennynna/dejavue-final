@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { FiltersSidebar } from "../components/filters-sidebar"
 import { Button } from "../components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
-import { SlidersHorizontal, Grid3X3, LayoutGrid } from "lucide-react"
+import { SlidersHorizontal } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet"
 import { VirtualProductGrid } from "@/components/virtual-product-grid"
 
@@ -14,7 +14,7 @@ export default function CategoriesPage() {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedVolume, setSelectedVolume] = useState<string>("all")
   const [sortBy, setSortBy] = useState<SortOption>("default")
-  const [gridCols, setGridCols] = useState<2 | 3>(2)
+  const [gridCols] = useState<2 | 3>(2)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
   const isFirstRender = useRef(true)
@@ -124,7 +124,6 @@ export default function CategoriesPage() {
                       setSelectedBrands={setSelectedBrands}
                       selectedVolume={selectedVolume}
                       setSelectedVolume={setSelectedVolume}
-                      onClose={() => setMobileFiltersOpen(false)}
                       isMobile
                     />
                     {activeFiltersCount > 0 && (

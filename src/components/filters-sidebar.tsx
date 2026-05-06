@@ -2,7 +2,6 @@ import { Checkbox } from "./ui/checkbox"
 import { Label } from "./ui/label"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { brands, volumeFilters } from "../lib/data"
-import { Button } from "./ui/button"
 
 interface FiltersSidebarProps {
   selectedGenders: string[]
@@ -11,7 +10,6 @@ interface FiltersSidebarProps {
   setSelectedBrands: (brands: string[]) => void
   selectedVolume: string
   setSelectedVolume: (volume: string) => void
-  onClose?: () => void
   isMobile?: boolean
 }
 
@@ -28,7 +26,6 @@ export function FiltersSidebar({
   setSelectedBrands,
   selectedVolume,
   setSelectedVolume,
-  onClose,
   isMobile,
 }: FiltersSidebarProps) {
   const genders = ["male", "female", "unisex"]
