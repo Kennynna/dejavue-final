@@ -52,23 +52,16 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-widest text-foreground">Контакты</h4>
             <ul className="mt-3 space-y-1 sm:mt-4 sm:space-y-2">
-              <li className="text-sm text-muted-foreground">Грозный, Чечня</li>
+              <li className="text-sm text-muted-foreground">Грозный, Чеченская Республика</li>
               <li>
                 <a
                   href="tel:+79991234567"
                   className="text-sm text-muted-foreground transition-colors hover:text-primary active:text-primary"
                 >
-                  +7 (999) 123-45-67
+                  +7 (920) 362-32-02
                 </a>
               </li>
-              <li>
-                <a
-                  href="mailto:info@dejavue-parfume.ru"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary active:text-primary"
-                >
-                  info@dejavue-parfume.ru
-                </a>
-              </li>
+
             </ul>
           </div>
         </div>

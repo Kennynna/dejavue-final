@@ -13,7 +13,7 @@ export const PRODUCTS: IProduct[] = [
     rating: 5,
     description:
       "Красивый и чувственный восточно-цветочный унисекс-парфюм, выпущенный в 2022 году арабским парфюмерным брендом Amouage. Это новая завораживающая интерпретация триады Amouage из розы, ладана и амбры.",
-    featured: true,
+    featured: false,
   },
   {
     id: 2,
@@ -65,7 +65,7 @@ export const PRODUCTS: IProduct[] = [
     rating: 5,
     description:
       "Этот нежный и подчеркнуто женственный аромат, заключенный в изящный круглый флакон, относится к цветочным фруктовым композициям.",
-    featured: true,
+    featured: false,
   },
   {
     id: 6,
