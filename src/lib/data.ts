@@ -1,6 +1,6 @@
 import { PRODUCTS } from "@/data/products"
 
-export const brands = [...new Set(PRODUCTS.map((p) => p.brand))].sort()
+export const brands = [...new Set(PRODUCTS.map((p) => p.brand.toLowerCase()))].sort()
 
 export const volumeFilters = [
   { value: "all", label: "Все объемы" },

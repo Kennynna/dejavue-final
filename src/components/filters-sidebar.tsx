@@ -80,7 +80,7 @@ export function FiltersSidebar({
 
         {/* Brands */}
         <div>
-          <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-foreground sm:mb-4">Популярные бренды</h3>
+          <h3 className="mb-3 text-sm font-semibold uppercase tracking-widest text-foreground sm:mb-4">Бренды</h3>
           <div className="max-h-40 space-y-2 overflow-y-auto pr-2 scrollbar-hide sm:max-h-48 sm:space-y-3">
             {brands.map((brand) => (
               <div key={brand} className="flex items-center gap-3">
@@ -94,7 +94,7 @@ export function FiltersSidebar({
                   htmlFor={`brand-${brand}`}
                   className="cursor-pointer py-1 text-sm text-foreground/80 sm:text-base"
                 >
-                  {brand}
+                  {brand.toUpperCase()}
                 </Label>
               </div>
             ))}

@@ -16,6 +16,16 @@ interface VirtualProductGridProps {
   sortBy?: string
 }
 
+function normalizeGender(gender: string): string {
+  const value = gender.trim().toLowerCase()
+
+  if (value === 'male' || value === 'мужской') return 'male'
+  if (value === 'female' || value === 'женский') return 'female'
+  if (value === 'unisex' || value === 'унисекс') return 'unisex'
+
+  return value
+}
+
 export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProductGridProps) {
   const listRef = useRef<HTMLDivElement>(null)
   const loadMoreRef = useRef<HTMLDivElement>(null)
@@ -40,11 +50,11 @@ export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProduct
     let result = [...allProducts]
 
     if (filters?.genders && filters.genders.length > 0) {
-      result = result.filter((p) => filters.genders.includes(p.gender))
+      result = result.filter((p) => filters.genders.includes(normalizeGender(p.gender)))
     }
 
     if (filters?.brands && filters.brands.length > 0) {
-      result = result.filter((p) => filters.brands.includes(p.brand))
+      result = result.filter((p) => filters.brands.includes(p.brand.toLowerCase()))
     }
 
     // Фильтрация по объему (одиночный выбор)

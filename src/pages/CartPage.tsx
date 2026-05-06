@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Link } from "react-router-dom"
 import { useCart } from "../components/cart-context"
@@ -5,9 +6,16 @@ import { Button } from "../components/ui/button"
 import { Card, CardContent } from "../components/ui/card"
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Send, Instagram } from "lucide-react"
 import { CartOrderNotice } from "@/components/cart-order-notice"
+import { Switch } from "../components/ui/switch"
+import { Label } from "../components/ui/label"
+
+const COURIER_DELIVERY_FEE = 300
 
 export default function CartPage() {
   const { items, updateQuantity, removeFromCart, subtotal, clearCart } = useCart()
+  const [courierDelivery, setCourierDelivery] = useState(true)
+
+  const orderTotal = subtotal + (courierDelivery ? COURIER_DELIVERY_FEE : 0)
 
   if (items.length === 0) {
     return (
@@ -73,7 +81,7 @@ export default function CartPage() {
                       <div className="flex gap-3 p-3 sm:gap-4 sm:p-4">
                         <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md bg-secondary/30 sm:h-32 sm:w-24">
                           <img
-                            src={item.perfume.images[0] || "/placeholder.svg"}
+                            src={`/parfume${item.perfume.images[0]}` || "/placeholder.svg"}
                             alt={item.perfume.name}
                             className="h-full w-full object-cover"
                           />
@@ -169,10 +177,25 @@ export default function CartPage() {
 
 
                     <div className="border-t border-border pt-3 sm:pt-4">
+                    <div className="flex items-center justify-between gap-3">
+                        <div className="flex-1">
+                          <Label htmlFor="delivery" className="text-sm font-medium text-foreground sm:text-base">
+                            Курьерская доставка
+                          </Label>
+                          <p className="mt-0.5 text-[16px] text-muted-foreground sm:mt-1 sm:text-sm">
+                            +300₽ по Грозному
+                          </p>
+                        </div>
+                        <Switch
+                          id="delivery"
+                          checked={courierDelivery}
+                          onCheckedChange={setCourierDelivery}
+                        />
+                      </div>
                       <div className="flex items-center justify-between">
                         <span className="text-base font-semibold text-foreground sm:text-lg">Итого</span>
                         <span className="text-xl font-bold text-primary sm:text-2xl">
-                          {subtotal.toLocaleString("ru-RU")} ₽
+                          {orderTotal.toLocaleString("ru-RU")} ₽
                         </span>
                       </div>
                     </div>
@@ -189,7 +212,7 @@ export default function CartPage() {
 
                   <div className="mt-3 flex items-center justify-center gap-4">
                     <a
-                      href="https://t.me/"
+                      href="https://t.me/kennynna"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2"

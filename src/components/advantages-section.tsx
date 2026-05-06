@@ -2,11 +2,7 @@ import { motion } from "framer-motion"
 import { Truck, Award, Package, Clock } from "lucide-react"
 
 const advantages = [
-  {
-    icon: Truck,
-    title: "Бесплатная доставка",
-    description: "При заказе от 3 позиций",
-  },
+
   {
     icon: Award,
     title: "Оригинальная продукция",
@@ -28,7 +24,7 @@ export function AdvantagesSection() {
   return (
     <section className="border-y border-border bg-secondary/30 py-10 sm:py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-3 justify-center">
           {advantages.map((advantage, index) => (
             <motion.div
               key={advantage.title}
