@@ -79,6 +79,8 @@
   --font-sans: "Cormorant Garamond", "Geist", "Geist Fallback", serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --font-serif: "Cormorant Garamond", serif;
+  --font-science-gothic: Inter, sans-serif;
+  --font-inter: serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

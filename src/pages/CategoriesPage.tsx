@@ -14,7 +14,6 @@ export default function CategoriesPage() {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedVolume, setSelectedVolume] = useState<string>("all")
   const [sortBy, setSortBy] = useState<SortOption>("default")
-  const [gridCols] = useState<2 | 3>(2)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
   const isFirstRender = useRef(true)
@@ -163,7 +162,6 @@ export default function CategoriesPage() {
             {/* Виртуализированная сетка с infinite scroll */}
             <div ref={gridRef}>
               <VirtualProductGrid
-                gridCols={gridCols}
                 filters={{
                   genders: selectedGenders,
                   brands: selectedBrands,

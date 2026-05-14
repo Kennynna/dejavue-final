@@ -19,7 +19,7 @@ export function CartOrderNotice() {
       <div></div>
       <a
         href={PHONE_HREF}
-        className="mt-3 inline-flex items-center justify-center ap-2 text-sm font-medium text-primary underline-offset-4 hover:underline pr-4.5"
+        className="mt-3 inline-flex items-center justify-center ap-2  text-primary underline-offset-4 hover:underline pr-4.5 text-xs font-inter font-bold"
       >
         {PHONE_DISPLAY}
       </a>

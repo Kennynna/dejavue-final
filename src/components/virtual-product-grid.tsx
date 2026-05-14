@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useMemo, useEffect, useState } from 'react'
 import { useWindowVirtualizer } from '@tanstack/react-virtual'
 import { Loader2 } from 'lucide-react'
 import { useInfiniteProducts } from '@/hooks/useInfiniteProducts'
@@ -6,8 +6,22 @@ import { ProductCard } from './product-card'
 import { IProduct } from '@/types'
 import Loader from '@/components/ui/Loader'
 
+/** Совпадает с Tailwind `lg:` — столько карточек в одной виртуальной строке, сколько колонок в сетке. */
+function useCatalogGridCols(): 2 | 3 {
+  const [cols, setCols] = useState<2 | 3>(2)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const sync = () => setCols(mq.matches ? 3 : 2)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
+  return cols
+}
+
 interface VirtualProductGridProps {
-  gridCols: 2 | 3
   filters?: {
     genders: string[]
     brands: string[]
@@ -26,9 +40,10 @@ function normalizeGender(gender: string): string {
   return value
 }
 
-export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProductGridProps) {
+export function VirtualProductGrid({ filters, sortBy }: VirtualProductGridProps) {
   const listRef = useRef<HTMLDivElement>(null)
   const loadMoreRef = useRef<HTMLDivElement>(null)
+  const gridCols = useCatalogGridCols()
 
   const {
     data,
@@ -197,7 +212,7 @@ export function VirtualProductGrid({ gridCols, filters, sortBy }: VirtualProduct
             >
               <div
                 className={`grid gap-3 pb-4 sm:gap-4 md:gap-6 ${
-                  gridCols === 2 ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-3'
+                  gridCols === 2 ? 'grid-cols-2' : 'grid-cols-3'
                 }`}
               >
                 {row.map((product) => (

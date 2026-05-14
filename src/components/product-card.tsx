@@ -27,7 +27,7 @@ export function ProductCard({ perfume }: ProductCardProps) {
 
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
-      <Card className="group overflow-hidden border-border/50 bg-card transition-shadow hover:shadow-lg max-[500px]:py-2">
+      <Card className="group overflow-hidden border-border/50 bg-card transition-shadow hover:shadow-lg max-[500px]:py-2 max-w-[350px]">
         <CardContent className="p-0" >
           <div className="relative aspect-[3/4] overflow-hidden bg-secondary/30 sm:aspect-[3/4]">
             <img
