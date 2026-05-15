@@ -31,7 +31,7 @@ export function FeaturedProducts() {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground sm:text-sm sm:tracking-[0.3em]">
+          <span className=" font-medium  tracking-[0.2em]  sm:tracking-[0.3em] text-primary sm:mt-4 sm:text-4xl md:text-5xl text-3xl">
             Избранная коллекция
           </span>
           <h2 className="mt-3 text-3xl font-light tracking-tight text-foreground sm:mt-4 sm:text-4xl md:text-5xl">
