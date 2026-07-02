@@ -23,17 +23,17 @@ export default defineConfig({
         scope: '/',
         icons: [
           {
-            src: '/parfume/log.png',
+            src: '/parfume/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/parfume/log.png',
+            src: '/parfume/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: '/parfume/log.png',
+            src: '/parfume/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
