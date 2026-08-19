@@ -1,0 +1,6 @@
+{
+  "name": "@dejavue/backend",
+  "version": "0.0.1",
+  "private": true,
+  "description": "NestJS API — спецификация в docs/product-api-spec.md"
+}

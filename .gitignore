@@ -3,6 +3,12 @@ node_modules/
 .pnp
 .pnp.js
 dev-dist
+
+# Backend (NestJS)
+backend/dist/
+backend/uploads/
+backend/.env
+
 # Testing
 coverage/
 *.lcov
