@@ -1,57 +1,38 @@
-# Dejavue Parfume Store
+# Dejavue
 
-Интернет-магазин люксовых духов, переведенный с Next.js на чистый React с Vite.
+Монорепозиторий интернет-магазина парфюмерии.
 
-## Технологии
-
-- **React 19** - UI библиотека
-- **Vite** - Сборщик и dev-сервер
-- **TypeScript** - Типизация
-- **React Router** - Маршрутизация
-- **Tailwind CSS v4** - Стилизация
-- **Radix UI** - UI компоненты
-- **Framer Motion** - Анимации
-
-## Установка
-
-1. Установите зависимости:
-```bash
-pnpm install
+```
+dejavue/
+├── frontend/   # React + Vite (витрина)
+├── backend/    # NestJS API (в разработке)
+└── docs/       # Спецификации
 ```
 
-2. Запустите dev-сервер:
-```bash
-pnpm dev
-```
-
-3. Откройте браузер по адресу `http://localhost:5173`
-
-## Сборка для продакшена
+## Быстрый старт
 
 ```bash
-pnpm build
+# из корня репозитория
+npm install
+npm run dev
 ```
 
-Собранные файлы будут в папке `dist/`.
+Фронтенд: http://localhost:5173
 
-## Структура проекта
+## Скрипты (из корня)
 
-```
-src/
-├── components/     # React компоненты
-│   ├── ui/        # UI компоненты (Radix UI)
-│   └── ...
-├── pages/         # Страницы приложения
-├── lib/           # Утилиты и данные
-├── hooks/         # React хуки
-├── App.tsx        # Главный компонент с роутингом
-└── main.tsx       # Точка входа
-```
+| Команда | Описание |
+|---------|----------|
+| `npm run dev` | Dev-сервер фронтенда |
+| `npm run build` | Production-сборка фронтенда |
+| `npm run lint` | ESLint фронтенда |
+| `npm run preview` | Preview production-сборки |
 
-## Скрипты
+## Workspaces
 
-- `pnpm dev` - Запуск dev-сервера
-- `pnpm build` - Сборка для продакшена
-- `pnpm preview` - Предпросмотр собранного приложения
-- `pnpm lint` - Проверка кода линтером
+- `@dejavue/frontend` — React 19, Vite, Tailwind, PWA
+- `@dejavue/backend` — NestJS (пока пустой, см. `docs/product-api-spec.md`)
 
+## Деплой (Vercel)
+
+В настройках проекта указать **Root Directory: `frontend`**.

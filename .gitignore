@@ -2,6 +2,12 @@
 node_modules/
 .pnp
 .pnp.js
+dev-dist
+
+# Backend (NestJS)
+backend/dist/
+backend/uploads/
+backend/.env
 
 # Testing
 coverage/
@@ -107,5 +113,4 @@ Thumbs.db
 # Package manager lock files (optional - uncomment if you want to ignore them)
 # package-lock.json
 # yarn.lock
-# pnpm-lock.yaml
 
