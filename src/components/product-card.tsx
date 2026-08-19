@@ -27,9 +27,9 @@ export function ProductCard({ perfume }: ProductCardProps) {
 
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
-      <Card className="group overflow-hidden border-border/50 bg-card transition-shadow hover:shadow-lg max-[500px]:py-2 max-w-[350px]">
+      <Card className="group mx-auto w-full max-w-[350px] overflow-hidden border-border/50 bg-card transition-shadow hover:shadow-lg max-[500px]:py-2 lg:max-w-[245px] lg:gap-3 lg:py-4">
         <CardContent className="p-0" >
-          <div className="relative aspect-[3/4] overflow-hidden bg-secondary/30 sm:aspect-[3/4]">
+          <div className="relative aspect-[3/4] overflow-hidden bg-secondary/30">
             <img
               src={`/parfume${perfume.images[0]}` || "/placeholder.svg"}
               alt={perfume.name}
@@ -43,7 +43,7 @@ export function ProductCard({ perfume }: ProductCardProps) {
             </span>
           </div>
 
-          <div className="p-3 max-[500px]:p-1 sm:p-4 sm:h-40  h-36">
+          <div className="h-36 p-3 max-[500px]:p-1 sm:h-40 sm:p-4 lg:h-36 lg:p-3">
             <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground sm:text-xs">
               {perfume.brand}
             </p>

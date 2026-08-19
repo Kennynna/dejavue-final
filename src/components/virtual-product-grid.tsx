@@ -122,7 +122,7 @@ export function VirtualProductGrid({ filters, sortBy }: VirtualProductGridProps)
   // Window Virtualizer — скролл всей страницы
   const rowVirtualizer = useWindowVirtualizer({
     count: rows.length,
-    estimateSize: () => 420,
+    estimateSize: () => (gridCols === 3 ? 300 : 420),
     overscan: 3,
     scrollMargin: listRef.current?.offsetTop ?? 0,
   })
@@ -211,7 +211,7 @@ export function VirtualProductGrid({ filters, sortBy }: VirtualProductGridProps)
               }}
             >
               <div
-                className={`grid gap-3 pb-4 sm:gap-4 md:gap-6 ${
+                className={`grid gap-3 pb-4 sm:gap-4 md:gap-6 lg:justify-items-center ${
                   gridCols === 2 ? 'grid-cols-2' : 'grid-cols-3'
                 }`}
               >

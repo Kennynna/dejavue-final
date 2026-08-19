@@ -42,7 +42,7 @@ export function FeaturedProducts() {
           </p>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 md:gap-6 lg:mt-16 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-4 md:gap-6 lg:mt-16 lg:grid-cols-3 lg:justify-items-center">
           {featured.length > 0 &&
             featured.map((perfume, index) => (
               <motion.div
