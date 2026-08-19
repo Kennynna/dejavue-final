@@ -33,6 +33,20 @@ npm run dev
 - `@dejavue/frontend` — React 19, Vite, Tailwind, PWA
 - `@dejavue/backend` — NestJS (пока пустой, см. `docs/product-api-spec.md`)
 
+## Ветки
+
+| Ветка | Назначение |
+|-------|------------|
+| **`Lending-version`** | Лендинг / витрина → деплой на Vercel |
+| **`fullstack`** | Frontend + backend, интеграция с API |
+
+Подробнее: [`docs/BRANCHES.md`](docs/BRANCHES.md)
+
+```bash
+git checkout Lending-version   # только витрина
+git checkout fullstack         # фулстэк-разработка
+```
+
 ## Деплой (Vercel)
 
 В настройках проекта указать **Root Directory: `frontend`**.
